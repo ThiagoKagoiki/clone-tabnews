@@ -16,13 +16,13 @@ async function query(queryObject) {
     password: process.env.POSTGRES_PASSWORD,
   });
 
-  await client.connect();
-
   try {
+    await client.connect();
     const res = await client.query(queryObject);
     return res;
   } catch (err) {
     console.error("Erro ao conectar ao banco de dados: ", err);
+    throw err;
   } finally {
     await client.end();
   }
